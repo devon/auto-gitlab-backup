@@ -74,7 +74,7 @@ rsyncUp() {
     echo =============================================================
     echo -e "Start rsync to \n$remoteServer:$remoteDest\ndefault key"
     echo =============================================================
-    rsync -Cavz --delete-after -e "ssh -p$remotePort" $gitRakeBackups/ $remoteUser@$remoteServer:$remoteDest
+    rsync -Cavz --delete-after --protocol=29 --bwlimit=1000 -e "ssh -p$remotePort" $gitRakeBackups/ $remoteUser@$remoteServer:$remoteDest
 }
 
 rsyncKey() {
@@ -82,7 +82,7 @@ rsyncKey() {
     echo =============================================================
     echo -e "Start rsync to \n$remoteServer:$remoteDest\nwith specific key"
     echo =============================================================
-    rsync -Cavz --delete-after -e "ssh -i $sshKeyPath -p$remotePort" $gitRakeBackups/ $remoteUser@$remoteServer:$remoteDest
+    rsync -Cavz --delete-after --protocol=29 --bwlimit=1000 -e "ssh -i $sshKeyPath -p$remotePort" $gitRakeBackups/ $remoteUser@$remoteServer:$remoteDest
 }
 
 rsyncDaemon() {
@@ -90,7 +90,7 @@ rsyncDaemon() {
     echo =============================================================
     echo -e "Start rsync to \n$remoteUser@$remoteServer:$remoteModule\nin daemon mode"
     echo =============================================================
-    rsync -Cavz --port=$remotePort --password-file=$rsync_password_file --delete-after /$gitRakeBackups/ $remoteUser@$remoteServer::$remoteModule
+    rsync -Cavz --protocol=29 --bwlimit=1000 --port=$remotePort --password-file=$rsync_password_file --delete-after /$gitRakeBackups/ $remoteUser@$remoteServer::$remoteModule
 
 }
 
